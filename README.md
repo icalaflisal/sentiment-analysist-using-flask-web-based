@@ -1,2 +1,3 @@
 # sentiment-analysist-using-flask-web-based
-By using flask 
+The main program is on main.py while using templates with static css
+
