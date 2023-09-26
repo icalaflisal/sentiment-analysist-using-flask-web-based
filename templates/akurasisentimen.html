@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>DTA-CaseFold</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" media="screen" href="../static/style.css" />
+
+<!-- Tell the browser to be responsive to screen width -->
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+<!-- Bootstrap 3.3.7 -->
+<link rel="stylesheet" href="{{ url_for('static',filename='bootstrap/dist/css/bootstrap.min.css')}}">
+<!-- Font Awesome -->
+<link rel="stylesheet" href="{{url_for('static',filename='font-awesome/css/font-awesome.min.css')}}">
+<!-- Ionicons -->
+<link rel="stylesheet" href="{{url_for('static',filename='Ionicons/css/ionicons.min.css')}}">
+<!-- DataTables -->
+<link rel="stylesheet" href="{{url_for('static',filename='datatables.net-bs/css/dataTables.bootstrap.min.css')}}">
+<!-- Theme style -->
+<link rel="stylesheet" href="{{url_for('static',filename='dist/css/AdminLTE.min.css')}}">
+<!-- AdminLTE Skins. Choose a skin from the css/skins
+     folder instead of downloading all of them to reduce the load. -->
+<link rel="stylesheet" href="{{url_for('static',filename='dist/css/skins/_all-skins.min.css')}}">
+<script src='https://kit.fontawesome.com/a076d05399.js'></script>
+<!-- Google Font -->
+<link rel="stylesheet"
+  href="https://fonts.googleapis.com/css?family=Roboto:300,400,600,700,300italic,400italic,600italic">
+<script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+</head>
+<body>
+
+    <div class="topnav" id="myTopnav">
+        <a href="{{url_for('index')}}" class="logo">DepokTweetAnalysis</a>
+      <div class="topnav-right">
+        <a href="{{url_for('index')}}">Home</a>
+        <div class="dropdown">
+            <button class="dropbtn">Preprocessing 
+              <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+              <a href="{{url_for('casedata')}}">Case Folding</a>
+              <a href="{{url_for('tokendata')}}">Tokenization</a>
+              <a href="{{url_for('stopwordsdata')}}" >Stopword Removal</a>
+              <a href="{{url_for('stemmingdata')}}" >Stemming</a>
+            </div>
+          </div> 
+        <a href="{{url_for('hasilsentiment')}}">Labeling</a>
+        <a href="{{url_for('akurasisentimen')}}" class="active">Diagram</a>
+        <a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="myFunction()">&#9776;</a>
+      </div>
+      </div>
+
+      <div class="pad margin no-print">
+        <div class="callout callout-danger" style="margin-bottom: 0!important;">
+            <h4><i class="fa fa-info-circle"></i> Note:</h4>
+            Statisik dari hasil sentimen data tes dan akurasi sentimen. Perbandingan menggunakan 80:20 dari 300 data.
+        </div>
+    </div>
+    
+    <section class="content">
+        <div class="box box-danger">
+            <div class="box-body ">
+    
+                <div class="row">
+                    <h2>
+                        <center>Data Hasil Akurasi</center>
+                    </h2>
+                    <div class="col-md-6" style="margin: 50%">
+    
+                        <div id="piechart" style="align-content: center">
+    
+                            <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    
+                            <script type="text/javascript">
+                                // Load google charts
+                                google.charts.load('current', { 'packages': ['corechart'] });
+                                google.charts.setOnLoadCallback(drawChart);
+    
+                                // Draw the chart and set the chart values
+                                function drawChart() {
+                                    var data = google.visualization.arrayToDataTable([
+                                        ['Akurasi', 'Persentase'],
+                                        ['Akurasi', {{ akurasi }}],
+                                ['Error', {{ kesalahan }}],
+                                    ]);
+    
+                                // Optional; add a title and set the width and height of the chart
+                                var options = { 'title': 'Akurasi Analisis', 'width': 450, 'height': 290 };
+    
+                                // Display the chart inside the <div> element with id="piechart"
+                                var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+                                chart.draw(data, options);
+                                }
+                            </script>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div id="chartContainer" style="height: 270px; width: 100%;">
+                            <script type="text/javascript">
+                                window.onload = function () {
+                                    var chart = new CanvasJS.Chart("chartContainer",
+                                        {
+                                            title: {
+                                                text: "",
+    
+                                            },
+    
+                                            legend: {
+                                                verticalAlign: "bottom",
+                                                horizontalAlign: "center"
+                                            },
+                                            data: [
+                                                {
+                                                    //startAngle: 45,
+                                                    indexLabelFontSize: 20,
+                                                    indexLabelFontFamily: "Garamond",
+                                                    indexLabelFontColor: "black",
+                                                    indexLabelLineColor: "darkgrey",
+                                                    indexLabelPlacement: "outside",
+                                                    type: "doughnut",
+                                                    showInLegend: true,
+                                                    dataPoints: [
+                                                        { y: {{ jml_pos }}, legendText: "Sentimen Positif {{jml_pos}} Data", indexLabel: "Positif : {{jml_pos}} Data" },
+                                        { y: {{ jml_neg }}, legendText: "Sentimen Negatif {{jml_neg}} Data", indexLabel: "Negatif : {{jml_neg}} Data" },
+                               ]
+                             }
+                             ]
+                           });
+    
+                                chart.render();
+                          }
+                            </script>
+    
+                        </div>
+    
+    
+                    </div>
+    
+    
+                </div>
+            </div>
+        </div>
+
+        </section>
+        <script>
+            var prevScrollpos = window.pageYOffset;
+            window.onscroll = function() {
+            var currentScrollPos = window.pageYOffset;
+              if (prevScrollpos > currentScrollPos) {
+                document.getElementById("myTopnav").style.top = "0";
+              } else {
+                document.getElementById("myTopnav").style.top = "-50px";
+              }
+              prevScrollpos = currentScrollPos;
+            }
+            </script>
+      
+      <script>
+          function myFunction() {
+            var x = document.getElementById("myTopnav");
+            if (x.className === "topnav") {
+              x.className += " responsive";
+            } else {
+              x.className = "topnav";
+            }
+          }
+          </script>
+        </body>
+        </html>

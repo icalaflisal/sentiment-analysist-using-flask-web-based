@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>DepokTweetAnalysis</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" media="screen" href="../static/style.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+
+    <div class="topnav" id="myTopnav">
+        <a href="{{url_for('index')}}" class="logo">DepokTweetAnalysis</a>
+      <div class="topnav-right">
+        <a href="{{url_for('index')}}">Home</a>
+        <div class="dropdown">
+            <button class="dropbtn">Preprocessing 
+              <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+              <a href="{{url_for('casedata')}}">Case Folding</a>
+              <a href="{{url_for('tokendata')}}">Tokenization</a>
+              <a href="{{url_for('stopwordsdata')}}" >Stopword Removal</a>
+              <a href="{{url_for('stemmingdata')}}" >Stemming</a>
+            </div>
+          </div> 
+        <a href="{{url_for('hasilsentiment')}}">Labeling</a>
+        <a href="{{url_for('akurasisentimen')}}">Diagram</a>
+        <a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="myFunction()">&#9776;</a>
+      </div>
+      </div>
+
+       <!-- jQuery 3 -->
+  <script src="{{url_for('static',filename='jquery/dist/jquery.min.js')}}"></script>
+  <!-- DataTables -->
+  <script src="{{url_for('static',filename='datatables.net/js/jquery.dataTables.min.js')}}"></script>
+  <script src="{{url_for('static',filename='datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
+  <!-- Bootstrap 3.3.7 -->
+  <script src="{{url_for('static',filename='bootstrap/dist/js/bootstrap.min.js')}}"></script>
+  <!-- SlimScroll -->
+  <script src="{{url_for('static',filename='jquery-slimscroll/jquery.slimscroll.min.js')}}"></script>
+  <!-- FastClick -->
+  <script src="{{url_for('static',filename='fastclick/lib/fastclick.js')}}"></script>
+  <!-- AdminLTE App -->
+  <script src="{{url_for('static',filename='dist/js/adminlte.min.js')}}"></script>
+  <script src="{{url_for('static',filename='chart.js/Chart.min.js')}}"></script>
+      <script>
+        var prevScrollpos = window.pageYOffset;
+        window.onscroll = function() {
+        var currentScrollPos = window.pageYOffset;
+          if (prevScrollpos > currentScrollPos) {
+            document.getElementById("myTopnav").style.top = "0";
+          } else {
+            document.getElementById("myTopnav").style.top = "-50px";
+          }
+          prevScrollpos = currentScrollPos;
+        }
+        </script>
+  
+  <script>
+      function myFunction() {
+        var x = document.getElementById("myTopnav");
+        if (x.className === "topnav") {
+          x.className += " responsive";
+        } else {
+          x.className = "topnav";
+        }
+      }
+      </script>
+      </body>
+      </html>

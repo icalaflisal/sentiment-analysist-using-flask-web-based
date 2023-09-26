@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>DepokTweetAnalysis</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" type="text/css" media="screen" href="../static/style.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<!-- Tell the browser to be responsive to screen width -->
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+<!-- Bootstrap 3.3.7 -->
+<link rel="stylesheet" href="{{ url_for('static',filename='bootstrap/dist/css/bootstrap.min.css')}}">
+<!-- Font Awesome -->
+<link rel="stylesheet" href="{{url_for('static',filename='font-awesome/css/font-awesome.min.css')}}">
+<!-- Ionicons -->
+<link rel="stylesheet" href="{{url_for('static',filename='Ionicons/css/ionicons.min.css')}}">
+<!-- DataTables -->
+<link rel="stylesheet" href="{{url_for('static',filename='datatables.net-bs/css/dataTables.bootstrap.min.css')}}">
+<!-- Theme style -->
+<link rel="stylesheet" href="{{url_for('static',filename='dist/css/AdminLTE.min.css')}}">
+<!-- AdminLTE Skins. Choose a skin from the css/skins
+     folder instead of downloading all of them to reduce the load. -->
+<link rel="stylesheet" href="{{url_for('static',filename='dist/css/skins/_all-skins.min.css')}}">
+<script src='https://kit.fontawesome.com/a076d05399.js'></script>
+<!-- Google Font -->
+<link rel="stylesheet"
+  href="https://fonts.googleapis.com/css?family=Roboto:300,400,600,700,300italic,400italic,600italic">
+<script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+</head>
+<body>
+
+    <div class="topnav" id="myTopnav">
+        <a href="{{url_for('index')}}" class="logo">DepokTweetAnalysis</a>
+      <div class="topnav-right">
+        <a href="{{url_for('index')}}">Home</a>
+        <div class="dropdown">
+            <button class="dropbtn">Preprocessing 
+              <i class="fa fa-caret-down"></i>
+            </button>
+            <div class="dropdown-content">
+              <a href="{{url_for('casedata')}}">Case Folding</a>
+              <a href="{{url_for('tokendata')}}">Tokenization</a>
+              <a href="{{url_for('stopwordsdata')}}" >Stopword Removal</a>
+              <a href="{{url_for('stemmingdata')}}" class="active" >Stemming</a>
+            </div>
+          </div> 
+        <a href="{{url_for('hasilsentiment')}}">Labeling</a>
+        <a href="{{url_for('akurasisentimen')}}">Diagram</a>
+        <a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="myFunction()">&#9776;</a>
+      </div>
+      </div>
+      <section class="content-header" style="margin-top: 60px">
+        <h1>
+          Stemming <i style='font-size:18px'></i>
+        </h1>
+        </section>
+      <section class="content">
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="box box-danger">
+              <div class="box-header">
+                <h3 class="title">Data test yang sudah dilakukan proses Stemming</h3>
+              </div>
+              <div class="box-body table-responsive ">
+                {% for table in tables %}
+                {{ table|safe }}
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+    
+      <script src="{{url_for('static',filename='jquery/dist/jquery.min.js')}}"></script>
+<script>
+  $(document).ready(function () {
+    $(' #tabel').DataTable({});
+  });
+</script>
+
+<!-- jQuery 3 -->
+<script src="{{url_for('static',filename='jquery/dist/jquery.min.js')}}"></script>
+<!-- DataTables -->
+<script src="{{url_for('static',filename='datatables.net/js/jquery.dataTables.min.js')}}"></script>
+<script src="{{url_for('static',filename='datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
+<!-- Bootstrap 3.3.7 -->
+<script src="{{url_for('static',filename='bootstrap/dist/js/bootstrap.min.js')}}"></script>
+<!-- SlimScroll -->
+<script src="{{url_for('static',filename='jquery-slimscroll/jquery.slimscroll.min.js')}}"></script>
+<!-- FastClick -->
+<script src="{{url_for('static',filename='fastclick/lib/fastclick.js')}}"></script>
+<!-- AdminLTE App -->
+<script src="{{url_for('static',filename='dist/js/adminlte.min.js')}}"></script>
+<script src="{{url_for('static',filename='chart.js/Chart.min.js')}}"></script>
+    <script>
+      var prevScrollpos = window.pageYOffset;
+      window.onscroll = function() {
+      var currentScrollPos = window.pageYOffset;
+        if (prevScrollpos > currentScrollPos) {
+          document.getElementById("myTopnav").style.top = "0";
+        } else {
+          document.getElementById("myTopnav").style.top = "-50px";
+        }
+        prevScrollpos = currentScrollPos;
+      }
+      </script>
+
+<script>
+    function myFunction() {
+      var x = document.getElementById("myTopnav");
+      if (x.className === "topnav") {
+        x.className += " responsive";
+      } else {
+        x.className = "topnav";
+      }
+    }
+    </script>
+    </body>
+    </html>
